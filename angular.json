@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "nomia"
+    }
+  },
+  "defaultProject": "nomia",
+  "cli": {
+    "analytics": false
+  }
 }

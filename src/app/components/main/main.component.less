@@ -1,0 +1,92 @@
+.main {
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+
+    >button {
+      width: 49%;
+    }
+  }
+
+  &__list {
+    padding-top: 12px;
+  }
+
+  &__dropdown {
+    order: -1;
+    margin: auto 0 auto 10px;
+
+    &-button {
+      width: 24px;
+
+      &:hover {
+        background: #409BEF;
+        border-radius: 32px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .fa-ellipsis-v {
+    margin-left: 9px;
+  }
+
+  --lcg-box__border-radius: 6px;
+  --lcg-box-list__offset: 4px;
+  --lcg-box__chevron__color: #22242C;
+}
+
+::ng-deep {
+  .lcg-box {
+    box-shadow: none !important;
+
+    .lcg-box__content {
+      background: #ECF1F9;
+      padding: 8px 0 8px 41px;
+    }
+
+    .lcg-box__header-title {
+      width: 100%;
+      display: flex;
+      margin-left: 20px;
+    }
+
+    .lcg-box__header-right {
+      margin-left: auto;
+    }
+
+    .lcg-box__header-chevron {
+      order: -2;
+      width: 20px;
+
+      &--up {
+        transform: rotate(-90deg);
+      }
+    }
+
+    .lcg-icon-chevron-down {
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      display: inline-block;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      line-height: 1;
+
+      &::before {
+        content: "\f078";
+      }
+    }
+  }
+
+  .lcg-box-list {
+    .lcg-box__header:focus {
+      --lcg-box__header__background-color: #409BEF !important;
+    }
+
+    .lcg-box--open {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+  }
+}

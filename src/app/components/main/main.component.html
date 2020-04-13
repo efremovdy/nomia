@@ -1,0 +1,102 @@
+<div class="main">
+  <div class="main__buttons">
+    <button class="btn btn-primary">
+      <i class="fas fa-plus-circle"></i>
+      Раздел
+    </button>
+    <button class="btn btn-primary">
+      <i class="fas fa-plus-circle"></i>
+      Позиция
+    </button>
+  </div>
+  <div class="main__list list-group">
+    <div class="lcg-box-list">
+      <lcg-box *ngFor="let section of sections" [isOpen]="false" [canClickHeader]="false">
+        <ng-container header>
+          <div class="main__dropdown">
+            <div (click)="clickByDropdown(section)" class="main__dropdown-button" id="dropdownMenu"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-ellipsis-v"></i>
+            </div>
+            <ng-container *ngTemplateOutlet="dropdownMenu"></ng-container>
+          </div>
+          <h4 class="lcg-box__header-title">
+            <span>{{section.name}}</span>
+          </h4>
+        </ng-container>
+        <ng-container content>
+          <ng-container *ngIf="!section.sections.length">
+            <lcg-box *ngFor="let item of section.items" [isOpen]="false" [noArrow]="true">
+              <ng-container header>
+                <div class="main__dropdown">
+                  <div (click)="clickByDropdown(item)" class="main__dropdown-button" id="dropdownMenu"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </div>
+                  <ng-container *ngTemplateOutlet="dropdownMenu"></ng-container>
+                </div>
+                <h4 class="lcg-box__header-title">
+                  {{item.name}}
+                  <span class="lcg-box__header-right">{{item.sale | currency:'RUB' :'symbol-narrow'}}</span>
+                </h4>
+              </ng-container>
+            </lcg-box>
+          </ng-container>
+
+          <div class="lcg-box-list">
+            <lcg-box *ngFor="let sect of section.sections" [isOpen]="false" [canClickHeader]="false">
+              <ng-container header>
+                <div class="main__dropdown">
+                  <div (click)="clickByDropdown(sect)" class="main__dropdown-button" id="dropdownMenu"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </div>
+                  <ng-container *ngTemplateOutlet="dropdownMenu"></ng-container>
+                </div>
+                <h4 class="lcg-box__header-title">{{sect.name}}</h4>
+              </ng-container>
+              <ng-container content>
+                <lcg-box *ngFor="let i of sect.items" [isOpen]="false" [noArrow]="true">
+                  <ng-container header>
+                    <div class="main__dropdown">
+                      <div (click)="clickByDropdown(i)" class="main__dropdown-button" id="dropdownMenu"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </div>
+                      <ng-container *ngTemplateOutlet="dropdownMenu"></ng-container>
+                    </div>
+                    <h4 class="lcg-box__header-title">
+                      {{i.name}}
+                      <span class="lcg-box__header-right">{{i.sale | currency:'RUB' :'symbol-narrow'}}</span>
+                    </h4>
+                  </ng-container>
+                </lcg-box>
+              </ng-container>
+            </lcg-box>
+          </div>
+        </ng-container>
+      </lcg-box>
+    </div>
+  </div>
+</div>
+
+<ng-template #dropdownMenu>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+    <button class="dropdown-item" type="button" (click)="addItem()">
+      <i class="fas fa-plus"></i>
+      Добавить позицию
+    </button>
+    <button class="dropdown-item" type="button" (click)="addSection()">
+      <i class="fas fa-plus"></i>
+      Добавить раздел меню
+    </button>
+    <button class="dropdown-item" type="button" (click)="edit()">
+      <i class="fas fa-edit"></i>
+      Редактировать
+    </button>
+    <button class="dropdown-item" type="button" (click)="delete()">
+      <i class="fas fa-trash-alt"></i>
+      Удалить
+    </button>
+  </div>
+</ng-template>

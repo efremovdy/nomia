@@ -1,0 +1,18 @@
+<div class="lcg-box" [class.lcg-box--open]="isOpen">
+	<div class="lcg-box__header" [ngClass]="{
+			'lcg-box__header--pointer': canClickHeader,
+			'lcg-box__header--open': isOpen
+		}"
+
+	[tabindex]="0"
+	(click)="clickOnHeader()"
+	(keydown)="keyboardHandler($event)">
+		<ng-content select="[header]"></ng-content>
+		<span class="lcg-box__header-chevron" *ngIf="!noArrow" [attr.aria-expanded]="isOpen" (click)="toggle()">
+			<i [ngClass]="{'lcg-box__header-chevron--up': !isOpen}" class="lcg-icon-chevron-down"></i>
+		</span>
+	</div>
+	<div class="lcg-box__content" *ngIf="isOpen">
+		<ng-content select="[content]"></ng-content>
+	</div>
+</div>
