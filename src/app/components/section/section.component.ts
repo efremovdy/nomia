@@ -20,9 +20,7 @@ export class SectionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-  ) {
-
-  }
+  ) { }
 
   ngOnInit() {
     this.getSections();
@@ -45,23 +43,6 @@ export class SectionComponent implements OnInit {
 
   private getSections() {
     this.sections = this.itemsService.getSections();
-    //this.sections = this.flatSections(sections, sections);
-
-  }
-
-  private flatSections(sections: Section[], mainSections: Section[] = []) {
-    let output = [];
-    sections.forEach(section => {
-      if (section.name && (!section.items.length || section.items[0].sale)) {
-        if (!mainSections.includes(section)) {
-          output.push(section);
-        }
-      }
-      if (section.sections.length) {
-        output = output.concat(this.flatSections(section.sections));
-      }
-    });
-    return output;
   }
 
   onSubmit() {
@@ -72,7 +53,7 @@ export class SectionComponent implements OnInit {
         }
       });
     } else {
-      if (this.f.section.value === 'null') {
+      if (!this.f.section.value) {
         this.sections.push({ name: this.f.name.value, sections: [], items: [] });
       } else {
         this.sections.forEach(s => {

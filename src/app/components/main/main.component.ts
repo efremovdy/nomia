@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ItemsService } from '../../services/items.service';
 import { Section } from './../../models/section';
@@ -12,22 +12,32 @@ export class MainComponent implements OnInit {
   public sections: Section[] = [];
   private _lastClickedEl: any = null;
 
-  constructor(private itemsService: ItemsService, private router: Router) {
-
-  }
+  constructor(
+    private itemsService: ItemsService,
+    private router: Router,
+    private elementRef: ElementRef
+  ) { }
 
   ngOnInit() {
     this.getSections();
   }
+
+  // TODO: handle focus on each child box, than enable 'Позиция' btn
+  /* ngAfterViewInit() {
+    const headers = this.elementRef.nativeElement.querySelectorAll('.lcg-box__header');
+    headers.forEach(h => {
+      h.addEventListener('focus', this.onFocus.bind(this));
+    });
+  }
+  private onFocus(event) {
+    console.log(event);
+  } */
 
   public clickByDropdown(el: any, hideAddSection = false) {
     this._lastClickedEl = el;
     if (hideAddSection) {
       this._lastClickedEl.hideAddSection = true;
     }
-    console.log(el);
-    console.log(document.activeElement);
-    // TODO: подумать как взять активный элемент
   }
 
   public get hideAddSection() {
@@ -39,8 +49,7 @@ export class MainComponent implements OnInit {
   }
 
   public addItem() {
-    console.log(this._lastClickedEl);
-    this.router.navigate(['/item']);
+    this.router.navigate(['/item'], { queryParams: { name: this._lastClickedEl.name } });
   }
 
   public addSection() {
@@ -51,7 +60,13 @@ export class MainComponent implements OnInit {
     if (!this.hideAddSection) {
       this.router.navigate(['/section'], { queryParams: { name: this._lastClickedEl.name, isEdit: true } });
     } else if (this.isItem) {
-
+      this.router.navigate(['/item'], {
+        queryParams: {
+          name: this._lastClickedEl.name,
+          sale: this._lastClickedEl.sale,
+          isEdit: true
+        }
+      });
     }
   }
 
@@ -60,10 +75,7 @@ export class MainComponent implements OnInit {
     const el = JSON.stringify(this._lastClickedEl);
     const source = JSON.stringify(this.sections);
     this.sections = JSON.parse(source.replace(el, '').replace(',]', ']').replace('[,', '[').replace(',,', ','));
-  }
-
-  private setSections() {
-
+    this.itemsService.setSections(this.sections);
   }
 
   private getSections() {

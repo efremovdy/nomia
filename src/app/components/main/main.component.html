@@ -4,9 +4,9 @@
       <i class="fas fa-plus-circle"></i>
       Раздел
     </button>
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" [disabled]="true">
       <i class="fas fa-plus-circle"></i>
-      Позиция
+      Позиция (todo)
     </button>
   </div>
   <div class="main__list list-group">
@@ -67,7 +67,7 @@
                     </div>
                     <h4 class="lcg-box__header-title">
                       {{i.name}}
-                      <span class="lcg-box__header-right">{{i.sale | currency:'RUB' :'symbol-narrow'}}</span>
+                      <span class="lcg-box__header-right">{{ i.sale }} ₽</span>
                     </h4>
                   </ng-container>
                 </lcg-box>
@@ -82,7 +82,7 @@
 
 <ng-template #dropdownMenu>
   <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-    <button class="dropdown-item" type="button" (click)="addItem()">
+    <button *ngIf="!isItem" class="dropdown-item" type="button" (click)="addItem()">
       <i class="fas fa-plus"></i>
       Добавить позицию
     </button>
